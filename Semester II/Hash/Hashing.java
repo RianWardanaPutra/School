@@ -43,7 +43,7 @@ class Hashing {
 
     public void printArray() {
         for (int i : this.arrayData) {
-            System.out.print(i + " => ");
+            System.out.print(i + " =>  ");
         }
     }
 }
@@ -73,24 +73,24 @@ class Driver {
         do {
             System.out.println("\nMenu:\n[1] Insert key\n[2] Show array\n[3] Insert random numbers\n[4] Exit");
             menu = sc.nextInt();
-            switch (menu){
-                case 1:
-                    System.out.print("\nInsert key: ");
-                    int key = sc.nextInt();
-                    hash1.insertQuadratic(key);
-                    break;
-                case 2:
-                    System.out.println("Created hash:");
-                    hash1.printArray();
-                    break;
-                case 3:
-                    System.out.println("Input number of random keys: ");
-                    int number = sc.nextInt();
-                    for (int i = 0; i < number; i++) {
-                        hash1.insertQuadratic((int) i * 2);
-                    }
-                default:
-                    break;
+            switch (menu) {
+            case 1:
+                System.out.print("\nInsert key: ");
+                int key = sc.nextInt();
+                hash1.insertQuadratic(key);
+                break;
+            case 2:
+                System.out.println("Created hash:");
+                hash1.printArray();
+                break;
+            case 3:
+                System.out.println("Input number of random keys: ");
+                int number = sc.nextInt();
+                for (int i = 0; i < number; i++) {
+                    hash1.insertQuadratic((int) (Math.random() * 100) + 1);
+                }
+            default:
+                break;
             }
         } while (menu != 4);
         System.out.println("Thank you!");
@@ -98,5 +98,4 @@ class Driver {
         sc.close();
     }
 
-    
 }
