@@ -113,6 +113,10 @@ class MaxHeap {
         int counter = currentSize - 1;
         while (currentSize > 0) {
             result[counter] = extract().getKey();
+            for (int i = 0; i < currentSize; i++) {
+                System.out.print("[" + i + "]: " + heapArray[i].getKey() + " ");
+            }
+            System.out.println();
             counter--;
         }
         return result;
@@ -184,8 +188,8 @@ class Tester {
                 System.out.println();
                 break;
             case 6:
-                System.out.print("\nHeap sort. Please note that this will remove all of heap's elements!\nSorted array:\n");
                 int[] sorted = h1.heapSort();
+                System.out.print("\nHeap sort. Please note that this will remove all of heap's elements!\nSorted array:\n");
                 for (int i = 0; i < sorted.length; i++) {
                     if (sorted[i] == 0) {
                         break;
