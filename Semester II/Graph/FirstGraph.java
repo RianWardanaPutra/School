@@ -40,6 +40,7 @@ class Graph {
         if(!isFull()){
             vertex[nV] = new Vertex(label);
             nV++;
+            return;
         } else {
             System.out.println("Graph is full!");
             return;
@@ -53,5 +54,9 @@ class Graph {
             return true;
         }
         return false;
+    }
+
+    public void bfs() {
+        
     }
 }
