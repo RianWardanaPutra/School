@@ -1,6 +1,8 @@
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -57,12 +59,6 @@ class Tester {
         }
     }
 
-    public static void swap(int a, int b) {
-        int temp = a;
-        a = b;
-        b = temp;
-    }
-
     public void quickSort(int[] arr, int low, int high) {
         if (low < high) {
             int pi = partition(arr, low, high);
@@ -73,23 +69,23 @@ class Tester {
     }
 
     public int partition(int[] arr, int low, int high) {
-        int pivot = arr[low];
-        int i = (low + 1);
-        for (int j = low; j <= high; j++) {
-            if (arr[j] <= pivot) {
-                System.out.println(i);
+        int pivot = arr[high];
+        int tracker = (low - 1);
+        for (int counter = low; counter < high; counter++) {
+            if (arr[counter] <= pivot) {
+                System.out.println(tracker);
                 // swap(arr[i], arr[j]);
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-                i++;
+                tracker++;
+                int temp = arr[tracker];
+                arr[tracker] = arr[counter];
+                arr[counter] = temp;
             }
         }
         // swap(arr[i+1], arr[high]);
-        int temp = arr[i - 1];
-        arr[i - 1] = arr[high];
+        int temp = arr[tracker + 1];
+        arr[tracker + 1] = arr[high];
         arr[high] = temp;
-        return (i - 1);
+        return (tracker + 1);
     }
 
     public void heapSort(int[] arr) {
@@ -134,67 +130,82 @@ class Tester {
         System.out.println();
     }
 
-    public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchProviderException {
+    public static void main(String[] args) throws IOException, FileNotFoundException {
         Scanner sc = new Scanner(System.in);
         int menu;
-    
+        System.out.println("Masukkan nama file: ");
+        String namaFile = sc.nextLine();
+        File file = new File(namaFile);
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        if (reader != null) {
+            System.out.println("File exists");
+        }
+        System.out.println("Masukkan jumlah data dalam file (misal 1000): ");
+        int size = sc.nextInt();
+        int[] arrayAngka = new int[size];
+        System.out.println("Memasukkan data ke dalam array... ");
+        for (int angka = 0; angka < size; angka++) {
+            if (reader.readLine() != null) {
+                arrayAngka[angka] = Integer.parseInt(reader.readLine());
+            }
+        }
+        if (reader != null) {
+            reader.close();
+        }
         System.out.println("Menu:\n[1] Merge\n[2] Quick\n[3] Heap\n[4] Exit");
         menu = sc.nextInt();
         switch (menu) {
-            case 1:
-                int[] randomArr = new int[500000000];
-                SecureRandom randomize = SecureRandom.getInstance("SHA1PRNG", "SUN");
-                for(int itr = 0; itr < 500000000; itr++) {
-                //    randomArr[itr] = (int) (Math.random() * 100000000 ) + 1;
-                    randomArr[itr] = randomize.nextInt();
-                }
-                //printer(randomArr);
-                Tester obj1 = new Tester();
-                long startTime = System.nanoTime();
-                obj1.mergeSort(randomArr, 0, (500000000-1));
-                long endTime = System.nanoTime();
-                long elapsedTime = endTime - startTime;
-                System.out.println("elapsed time: " + elapsedTime);
-                System.out.println("time in milis: " + TimeUnit.NANOSECONDS.toMillis(elapsedTime));
-                System.out.println("time in seconds: " + TimeUnit.NANOSECONDS.toSeconds(elapsedTime));
-                //printer(randomArr);
-                break;
-            case 2:
-                int[] randomArr2 = new int[5];
-                for(int itr = 0; itr < 5; itr++) {
-                    randomArr2[itr] = (int) (Math.random() * 100) + 1;
-                }
-                printer(randomArr2);
-                Tester obj2 = new Tester();
-                long startTime2 = System.nanoTime();
-                try{
-                    obj2.quickSort(randomArr2, 0, 4);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    e.printStackTrace();
-                }
-                long endTime2 = System.nanoTime();
-                long elapsedTime2 = endTime2 - startTime2;
-                System.out.println("elapsed time: " + elapsedTime2);
-                printer(randomArr2);
-                break;
-            case 3:
-                int[] randomArr3 = new int[20];
-                for(int itr = 0; itr < 20; itr++) {
-                    randomArr3[itr] = (int) (Math.random() * 100) + 1;
-                }
-                printer(randomArr3);
-                Tester obj3 = new Tester();
-                long startTime3 = System.nanoTime();
-                obj3.heapSort(randomArr3);
-                long endTime3 = System.nanoTime();
-                long elapsedTime3 = endTime3 - startTime3;
-                System.out.println("elapsed time: " + elapsedTime3);
-                printer(randomArr3);
-                break;
-            default:
-                break;
+        case 1:
+            // printer(randomArr);
+            Tester obj1 = new Tester();
+            System.out.println("Press any key to start");
+            sc.next();
+            long startTime = System.nanoTime();
+            obj1.mergeSort(arrayAngka, 0, (size - 1));
+            long endTime = System.nanoTime();
+            long elapsedTime = endTime - startTime;
+            System.out.println("elapsed time: " + elapsedTime);
+            System.out.println("time in milis: " + TimeUnit.NANOSECONDS.toMillis(elapsedTime));
+            System.out.println("time in seconds: " + TimeUnit.NANOSECONDS.toSeconds(elapsedTime));
+            System.out.println("time in minutes: " + TimeUnit.NANOSECONDS.toMinutes(elapsedTime));
+            // printer(randomArr);
+            break;
+        case 2:
+
+            Tester obj2 = new Tester();
+            System.out.println("Press any key to start");
+            sc.next();
+            long startTime2 = System.nanoTime();
+            try {
+                obj2.quickSort(arrayAngka, 0, size - 1);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
+            long endTime2 = System.nanoTime();
+            long elapsedTime2 = endTime2 - startTime2;
+            System.out.println("elapsed time: " + elapsedTime2);
+            System.out.println("time in milis: " + TimeUnit.NANOSECONDS.toMillis(elapsedTime2));
+            System.out.println("time in seconds: " + TimeUnit.NANOSECONDS.toSeconds(elapsedTime2));
+            System.out.println("time in minutes: " + TimeUnit.NANOSECONDS.toMinutes(elapsedTime2));
+            break;
+        case 3:
+
+            Tester obj3 = new Tester();
+            System.out.println("Press any key to start");
+            sc.next();
+            long startTime3 = System.nanoTime();
+            obj3.heapSort(arrayAngka);
+            long endTime3 = System.nanoTime();
+            long elapsedTime3 = endTime3 - startTime3;
+            System.out.println("elapsed time: " + elapsedTime3);
+            System.out.println("time in milis: " + TimeUnit.NANOSECONDS.toMillis(elapsedTime3));
+            System.out.println("time in seconds: " + TimeUnit.NANOSECONDS.toSeconds(elapsedTime3));
+            System.out.println("time in minutes: " + TimeUnit.NANOSECONDS.toMinutes(elapsedTime3));
+            break;
+        default:
+            break;
         }
-        
+        System.out.println("Thank you! \n*pant (exhausted)...");
         sc.close();
     }
 }

@@ -4,7 +4,7 @@ import java.security.*;
 
 public class RandomNumGenerator{
     public static void main(String[] args) throws FileNotFoundException,NoSuchAlgorithmException,NoSuchProviderException,IOException{
-        File randomNum= new File("randomNumber500m.txt");
+        File randomNum= new File("randomNumber300m.txt");
         PrintWriter inRand= new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(randomNum),"UTF-8")),false);
         SecureRandom randomer= SecureRandom.getInstance("SHA1PRNG","SUN");
         Scanner inputNum=new Scanner(System.in);
