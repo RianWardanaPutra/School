@@ -7,85 +7,75 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 class Tester {
-    public void mergeSort(int[] arr, int l, int r) {
-        if (l < r) {
-            int m = l + (r - l) / 2;
+    int partition(int arr[], int low, int high) {
+        int pivot = arr[low+(high-low)/2];
+        int left = low-1;
+        int right = high+1;
 
-            mergeSort(arr, l, m);
-            mergeSort(arr, m + 1, r);
+        while (true) {
+            while (arr[++left] < pivot);
+            while (arr[--right] > pivot);
 
-            merge(arr, l, m, r);
-        }
-    }
-
-    public void merge(int[] arr, int left, int mid, int right) {
-        int i, j, k;
-        int total1 = mid - left + 1;
-        int total2 = right - mid;
-
-        int[] L = new int[total1];
-        int[] R = new int[total2];
-
-        for (i = 0; i < total1; i++)
-            L[i] = arr[left + i];
-        for (j = 0; j < total2; j++)
-            R[j] = arr[mid + 1 + j];
-
-        i = 0;
-        j = 0;
-        k = left;
-
-        while (i < total1 && j < total2) {
-            if (L[i] <= R[j]) {
-                arr[k] = L[i];
-                i++;
+            if (left < right) {
+                int tmp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = tmp;
             } else {
-                arr[k] = R[j];
-                j++;
+                return right;
             }
-            k++;
-        }
-
-        while (i < total1) {
-            arr[k] = L[i];
-            i++;
-            k++;
-        }
-
-        while (j < total2) {
-            arr[k] = R[j];
-            j++;
-            k++;
         }
     }
 
-    public void quickSort(int[] arr, int low, int high) {
-        if (low < high) {
+    /*
+     * The main function that implements QuickSort() arr[] --> Array to be sorted,
+     * low --> Starting index, high --> Ending index
+     */
+    void quickSort(int arr[], int low, int high) {
+        while (low < high) {
             int pi = partition(arr, low, high);
-
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
+            if (pi - low <= high - (pi + 1)) {
+                quickSort(arr, low, pi);
+                low = pi + 1;
+            } else {
+                quickSort(arr, pi + 1, high);
+                high = pi;
+            }
         }
     }
 
-    public int partition(int[] arr, int low, int high) {
-        int pivot = arr[high];
-        int tracker = (low - 1);
-        for (int counter = low; counter < high; counter++) {
-            if (arr[counter] <= pivot) {
-                System.out.println(tracker);
-                // swap(arr[i], arr[j]);
-                tracker++;
-                int temp = arr[tracker];
-                arr[tracker] = arr[counter];
-                arr[counter] = temp;
+    public void sort(int[] arr) {
+        int[] aux = new int[arr.length];
+        mergeSort(arr, aux, 0, arr.length - 1);
+    }
+
+    public void mergeSort(int[] arr, int[] aux, int low, int high) {
+        if (low < high) {
+            int mid = low + (high - low) / 2;
+            mergeSort(arr, aux, low, mid);
+            mergeSort(arr, aux, mid + 1, high);
+            if (arr[mid + 1] >= arr[mid]) {
+                return;
             }
+            merge(arr, aux, low, mid, high);
         }
-        // swap(arr[i+1], arr[high]);
-        int temp = arr[tracker + 1];
-        arr[tracker + 1] = arr[high];
-        arr[high] = temp;
-        return (tracker + 1);
+    }
+
+    public void merge(int[] arr, int[] aux, int low, int mid, int high) {
+        for (int k = low; k <= high; k++) {
+            aux[k] = arr[k];
+        }
+
+        int left = low, right = mid + 1;
+        for (int k = low; k <= high; k++) {
+            if (left > mid)
+                arr[k] = aux[right++];
+            else if (right > high)
+                arr[k] = aux[left++];
+            else if (aux[right] < aux[left])
+                arr[k] = aux[right++];
+            else
+                arr[k] = aux[left++];
+        }
     }
 
     public void heapSort(int[] arr) {
@@ -130,12 +120,12 @@ class Tester {
         System.out.println();
     }
 
-    public static void main(String[] args) throws IOException, FileNotFoundException {
+    public static void main(String[] args) throws IOException, FileNotFoundException, StackOverflowError {
         Scanner sc = new Scanner(System.in);
         int menu;
-        System.out.println("Masukkan nama file: ");
+        System.out.println("Masukkan angka pada nama file: ");
         String namaFile = sc.nextLine();
-        File file = new File(namaFile);
+        File file = new File("randomNumber" + namaFile + ".txt");
         BufferedReader reader = new BufferedReader(new FileReader(file));
         if (reader != null) {
             System.out.println("File exists");
@@ -161,13 +151,15 @@ class Tester {
             System.out.println("Press any key to start");
             sc.next();
             long startTime = System.nanoTime();
-            obj1.mergeSort(arrayAngka, 0, (size - 1));
+            obj1.sort(arrayAngka);
             long endTime = System.nanoTime();
             long elapsedTime = endTime - startTime;
-            System.out.println("elapsed time: " + elapsedTime);
-            System.out.println("time in milis: " + TimeUnit.NANOSECONDS.toMillis(elapsedTime));
-            System.out.println("time in seconds: " + TimeUnit.NANOSECONDS.toSeconds(elapsedTime));
-            System.out.println("time in minutes: " + TimeUnit.NANOSECONDS.toMinutes(elapsedTime));
+            long minutes = TimeUnit.NANOSECONDS.toMinutes(elapsedTime);
+            long seconds = TimeUnit.NANOSECONDS.toSeconds(elapsedTime) - TimeUnit.MINUTES.toSeconds(minutes);
+            long miliSeconds = TimeUnit.NANOSECONDS.toMillis(elapsedTime) - (TimeUnit.MINUTES.toMillis(minutes) + TimeUnit.SECONDS.toMillis(seconds));
+            long nanoSeconds = elapsedTime - (TimeUnit.MINUTES.toNanos(minutes) + TimeUnit.SECONDS.toNanos(seconds) + TimeUnit.MILLISECONDS.toNanos(miliSeconds));
+            System.out.println("elapsed time (nanoseconds): " + elapsedTime);
+            System.out.println("elapsed time: " + minutes + "m " + seconds + "s " + miliSeconds + "ms " + nanoSeconds + "ns.");
             // printer(randomArr);
             break;
         case 2:
@@ -176,17 +168,16 @@ class Tester {
             System.out.println("Press any key to start");
             sc.next();
             long startTime2 = System.nanoTime();
-            try {
-                obj2.quickSort(arrayAngka, 0, size - 1);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                e.printStackTrace();
-            }
+
+            obj2.quickSort(arrayAngka, 0, arrayAngka.length - 1);
             long endTime2 = System.nanoTime();
             long elapsedTime2 = endTime2 - startTime2;
-            System.out.println("elapsed time: " + elapsedTime2);
-            System.out.println("time in milis: " + TimeUnit.NANOSECONDS.toMillis(elapsedTime2));
-            System.out.println("time in seconds: " + TimeUnit.NANOSECONDS.toSeconds(elapsedTime2));
-            System.out.println("time in minutes: " + TimeUnit.NANOSECONDS.toMinutes(elapsedTime2));
+            long minutes2 = TimeUnit.NANOSECONDS.toMinutes(elapsedTime2);
+            long seconds2 = TimeUnit.NANOSECONDS.toSeconds(elapsedTime2) - TimeUnit.MINUTES.toSeconds(minutes2);
+            long miliSeconds2 = TimeUnit.NANOSECONDS.toMillis(elapsedTime2) - (TimeUnit.MINUTES.toMillis(minutes2) + TimeUnit.SECONDS.toMillis(seconds2));
+            long nanoSeconds2 = elapsedTime2 - (TimeUnit.MINUTES.toNanos(minutes2) + TimeUnit.SECONDS.toNanos(seconds2) + TimeUnit.MILLISECONDS.toNanos(miliSeconds2));
+            System.out.println("elapsed time (nanoseconds): " + elapsedTime2);
+            System.out.println("elapsed time: " + minutes2 + "m " + seconds2 + "s " + miliSeconds2 + "ms " + nanoSeconds2 + "ns.");
             break;
         case 3:
 
@@ -197,15 +188,17 @@ class Tester {
             obj3.heapSort(arrayAngka);
             long endTime3 = System.nanoTime();
             long elapsedTime3 = endTime3 - startTime3;
-            System.out.println("elapsed time: " + elapsedTime3);
-            System.out.println("time in milis: " + TimeUnit.NANOSECONDS.toMillis(elapsedTime3));
-            System.out.println("time in seconds: " + TimeUnit.NANOSECONDS.toSeconds(elapsedTime3));
-            System.out.println("time in minutes: " + TimeUnit.NANOSECONDS.toMinutes(elapsedTime3));
+            long minutes3 = TimeUnit.NANOSECONDS.toMinutes(elapsedTime3);
+            long seconds3 = TimeUnit.NANOSECONDS.toSeconds(elapsedTime3) - TimeUnit.MINUTES.toSeconds(minutes3);
+            long miliSeconds3 = TimeUnit.NANOSECONDS.toMillis(elapsedTime3) - (TimeUnit.MINUTES.toMillis(minutes3) + TimeUnit.SECONDS.toMillis(seconds3));
+            long nanoSeconds3 = elapsedTime3 - (TimeUnit.MINUTES.toNanos(minutes3) + TimeUnit.SECONDS.toNanos(seconds3) + TimeUnit.MILLISECONDS.toNanos(miliSeconds3));
+            System.out.println("elapsed time (nanoseconds): " + elapsedTime3);
+            System.out.println("elapsed time: " + minutes3 + "m " + seconds3 + "s " + miliSeconds3 + "ms " + nanoSeconds3 + "ns.");
             break;
         default:
             break;
         }
-        System.out.println("Thank you! \n*pant (exhausted)...");
+        System.out.println("Thank you!");
         sc.close();
     }
 }
