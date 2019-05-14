@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 class Hashing {
     int arraySize;
     int currentSize;
@@ -45,14 +47,35 @@ class Hashing {
         }
     }
 
-    public int clusterCount(int a) {
-        if(a == arraySize-1)
-            return 0;
-        int counter = a;
+    public int clusterCount() {
+        boolean still = false;
         int cluster = 0;
-        while(arrayData[counter++] != -1 && counter < arraySize){
+        for(int counter = 0; counter < arraySize; counter++) {
+            if(arrayData[counter] != -1 && !still) {
+                counter++;
+                still = true;
+            } else if (arrayData[counter] == -1) {
+                still = false;
+            }
         }
-        cluster++;
-        return(cluster + clusterCount(counter));
+        return cluster;
+    }
+}
+
+class Tester {
+    public static void main(String[] args) {
+        Hashing obj1 = new Hashing(100);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Input number");
+        int menu = sc.nextInt();
+        switch(menu) {
+            case 1:
+                System.out.println("Load factor 0.3:");
+                
+                for(int i = 0; i < 30; i++) {
+                    obj1.insertQuadratic((int)(Math.random() * 1000) + 1);
+                }
+        }
+        sc.close();
     }
 }
