@@ -26,10 +26,6 @@ class Tester {
         }
     }
 
-    /*
-     * The main function that implements QuickSort() arr[] --> Array to be sorted,
-     * low --> Starting index, high --> Ending index
-     */
     void quickSort(int arr[], int low, int high) {
         while (low < high) {
             int pi = partition(arr, low, high);
