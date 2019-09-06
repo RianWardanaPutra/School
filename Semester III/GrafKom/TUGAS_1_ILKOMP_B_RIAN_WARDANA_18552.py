@@ -164,7 +164,6 @@ root.columnconfigure(0, weight=1)
 
 
 # Attributes yang dipasang di GUI, biar mudah inputnya.
-# Kalau pakai ini kan kita jadi tidak ngetik di console :D
 entryx1 = ttk.Entry(mainframe, width=10, textvariable=tx1)
 entryy1 = ttk.Entry(mainframe, width=10, textvariable=ty1)
 entryx2 = ttk.Entry(mainframe, width=10, textvariable=tx2)
@@ -182,7 +181,7 @@ ttk.Label(mainframe, text="Input X2:").grid(column=0, row=3, sticky=N + W)
 ttk.Label(mainframe, text="Input Y2:").grid(column=0, row=4, sticky=N + W)
 ttk.Label(mainframe, text="Input R:").grid(column=0, row=5, sticky=N + W)
 
-# Tombol sakti (untuk memulai gambar) :))
+# Tombol (untuk memulai gambar) :))
 startButton = ttk.Button(mainframe, text="Start", command=do_task)
 startButton.grid(column=1, row=6, sticky=N + W)
 
