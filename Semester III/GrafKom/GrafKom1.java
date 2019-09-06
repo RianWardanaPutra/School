@@ -9,9 +9,10 @@ import javax.swing.border.BevelBorder;
 
 class Graf extends JFrame {
 
-    Graf() {
+    private static final long serialVersionUID = 1L;
+
+	Graf() {
         initComponents();
-        setVisible(true);
     }
 
     public void initComponents() {
@@ -22,19 +23,35 @@ class Graf extends JFrame {
         pack();
     }
 
-    class Panel extends JPanel {
+    class Panel extends JPanel implements Runnable{
 
-        Panel() {
-            setBackground(Color.GREEN);
+        private static final long serialVersionUID = 1L;
+
+        double xinc, yinc, x, y;
+        int steps, k, dx, dy;
+
+		Panel() {
+            //setBackground(Color.GREEN);
             setPreferredSize(new Dimension(640, 640));
         }
 
         void drawLine(int xa, int ya, int xb, int yb) {
-            double dx, dy, xinc, yinc, x, y;
-            int steps, k;
 
-            dx = xb - xa;
-            dy = yb - ya;
+            dx = (xb - xa);
+            dy = (yb - ya);
+            x = (double)xa;
+            y = (double)ya;
+            if(dx>dy) {
+                steps = dx;
+            } else {
+                steps = dy;
+            }
+
+            xinc = dx/steps;
+            yinc = dy/steps;
+            repaint(xa, ya, 1, 1);
+            run();
+            
         }
 
         @Override
@@ -42,11 +59,28 @@ class Graf extends JFrame {
             super.paint(g);
             g.drawArc(100, 100, 50, 50, 0, 360);
         }
+
+		@Override
+		public void run() {
+			for(k = 0; k < steps; k++) {
+                x += xinc;
+                y += yinc;
+                repaint((int)x, (int)y, 1, 1);
+                try {
+					wait(50);
+        		} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+		}
     }
 
     private Panel panel;
 
     public static void main(String[] args) {
         Graf graf = new Graf();
+        graf.setVisible(true);
+        graf.panel.drawLine(50, 50, 500, 500);
     }
 }
