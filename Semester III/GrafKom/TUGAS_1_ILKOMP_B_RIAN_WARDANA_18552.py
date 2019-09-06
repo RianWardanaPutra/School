@@ -4,6 +4,9 @@
 ###### Created by Rian Wardana 18552 #####
 ##########################################
 
+## ! Important => Jalankan dengan command " python <nama_file_ini.py> "
+## ! Important => Atau " python3 <nama_file_ini.py> " jika terjadi error syntax
+
 from tkinter import *
 from tkinter import ttk
 import math as mt
