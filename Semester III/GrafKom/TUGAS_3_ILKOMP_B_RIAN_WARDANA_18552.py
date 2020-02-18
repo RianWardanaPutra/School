@@ -122,7 +122,7 @@ ttk.Label(mainframe, text="Input Point Cy: ").grid(column=0, row=6, sticky=N+W)
 button = ttk.Button(mainframe, text="Go!", command=__start).grid(column=0, row=7, sticky=N+W)
 clear_button = ttk.Button(mainframe, text="Clear!", command=clear).grid(column=1, row=7)
 root.pack_slaves()
-draw_rect()
+# draw_rect()
 
 
 

@@ -51,7 +51,6 @@ class Graf extends JFrame {
             yinc = dy/steps;
             repaint(xa, ya, 1, 1);
             run();
-            
         }
 
         @Override
