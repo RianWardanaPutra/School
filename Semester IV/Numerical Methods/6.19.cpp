@@ -19,12 +19,12 @@ int main(int argc, char const *argv[])
         if(count((low + high) / 2) < 30)
         {
             low = (low + high) / 2;
-            cout << "low: " << low << endl;
+            // cout << "low: " << low << endl;
         }
         else
         {
             high = (low + high) / 2;
-            printf("high: %lf\n", high);
+            // printf("high: %lf\n", high);
         }
     }
     cout << "low: " << low << ", count: " << count(low) << endl;
