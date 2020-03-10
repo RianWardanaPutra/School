@@ -14,20 +14,21 @@ int main(int argc, char const *argv[])
 {
     double low = 0;
     double high = 10;
-    for(int i = 0; i < 100; i++)
+    for(int i = 0; i < 3; i++)
     {
         if(count((low + high) / 2) < 30)
         {
+            cout << "low: " << low << ", count(low): " << count(low) << endl;
             low = (low + high) / 2;
-            cout << "low: " << low << endl;
         }
         else
         {
+            printf("high: %lf, count(high): %lf\n", high, count(high));
             high = (low + high) / 2;
-            printf("high: %lf\n", high);
         }
     }
-    cout << "low: " << low << ", count: " << count(low) << endl;
-    cout << "high: " << high << ", count: " << count(high) << endl;
+    cout << "final low: " << low << ", count: " << count(low) << endl;
+    cout << "final high: " << high << ", count: " << count(high) << endl;
+    printf("Result H after 3 iterations, H: %lf, count(H): %lf\n", (high+low/2.0), count((high+low)/2.0));
     return 0;
 }

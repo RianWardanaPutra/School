@@ -34,9 +34,10 @@ int main(int argc, char const *argv[])
         }
         
     }
-    cout << "0.7: " << count(0.7) << endl;
+//    cout << "0.7: " << count(0.7) << endl;
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("low: %lf => result low: %f\n", low, count(low));
     printf("high: %lf => result high: %f\n", high, count(high));
+//    printf("Final result, H: %lf => result of f(H): %lf\n", ((low+high)/2.0, count((low+high)/2)));
     return 0;
 }
