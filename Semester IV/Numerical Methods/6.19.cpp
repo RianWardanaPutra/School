@@ -20,11 +20,19 @@ int main(int argc, char const *argv[])
         {
             cout << "low: " << low << ", count(low): " << count(low) << endl;
             low = (low + high) / 2;
+<<<<<<< HEAD
+=======
+            // cout << "low: " << low << endl;
+>>>>>>> 5c78a479f12aa3b70bcecc5efea6c49f11f3661b
         }
         else
         {
             printf("high: %lf, count(high): %lf\n", high, count(high));
             high = (low + high) / 2;
+<<<<<<< HEAD
+=======
+            // printf("high: %lf\n", high);
+>>>>>>> 5c78a479f12aa3b70bcecc5efea6c49f11f3661b
         }
     }
     cout << "final low: " << low << ", count: " << count(low) << endl;

@@ -24,17 +24,21 @@ int main(int argc, char const *argv[])
         double x = count((low + high) / 2);
         if (x > 0)
         {
-            cout << "High: " << high << endl;
+            // cout << "High: " << high << endl;
             high = (high + low) / 2;
         }
         else
         {
-            cout << "Low: " << low << endl;
+            // cout << "Low: " << low << endl;
             low = (high + low) / 2;
         }
         
     }
+<<<<<<< HEAD
 //    cout << "0.7: " << count(0.7) << endl;
+=======
+    // cout << "0.7: " << count(0.7) << endl;
+>>>>>>> 5c78a479f12aa3b70bcecc5efea6c49f11f3661b
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("low: %lf => result low: %f\n", low, count(low));
     printf("high: %lf => result high: %f\n", high, count(high));
