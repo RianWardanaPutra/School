@@ -55,7 +55,7 @@ def jalan(cameFrom, current):
     score = 0
     while current in cameFrom.Keys():
         current = cameFrom[current]
-        total_path.insert(0, current)
+        total_path.insert(0, current.nama)
     return total_path 
         
 
@@ -67,14 +67,16 @@ def A_star(start, goal):
 
     cameFrom = {}
 
+    # Isinya (Kota, jarak dari origin start)
     gScore = {}
-    gScore[start.nama] = 0
+    gScore[start] = 0
 
     fScore = {}
     fScore[start] = start.air_distance[goal]
 
     while len(openSet) > 0:
 
+        # openSet isinya (jarak dari start, Kota)
         current = openSet[0][1]
         
         if current.nama == goal:
@@ -86,10 +88,10 @@ def A_star(start, goal):
         for neighbor in current.neighbors:
             kota_neighbor = Kota(neighbor)
             index = list(list_kota.keys())[list(list_kota.values()).index(neighbor)]
-            gScore[neighbor] = tabel[current.nama][index]
-            tentative_gScore = gScore[current.nama] + float(current.neighbors[neighbor])
-            print([x for x in gScore.keys()])
-            if tentative_gScore < gScore[neighbor]:
+            gScore[kota_neighbor] = tabel[current.nama][index]
+            tentative_gScore = gScore[current] + float(gScore[kota_neighbor])
+            print([(x.nama, y) for x, y in gScore.items()])
+            if tentative_gScore < gScore[kota_neighbor]:
                 cameFrom[neighbor] = Kota(current)
                 gScore[neighbor] = tentative_gScore
                 the_neighbor_city = Kota(current.nama)
@@ -105,5 +107,5 @@ def A_star(start, goal):
 start = Kota('yogyakarta')
 goal = "semarang"
 
-A_star(start, goal)
+print(A_star(start, goal))
 
