@@ -1,6 +1,7 @@
 #include <iostream>
+using namespace std;
 
-
+// Struct of how the file is stored in the table
 struct file
 {
     char fname[10];
@@ -10,30 +11,34 @@ struct file
 int main(int argc, char const *argv[])
 {
     int i,j,n;
-    std::cout << "Enter number of files: ";
-    std::cin >> n;
+
+    // Number files to stored
+    cout << "Enter number of files: ";
+    cin >> n;
     for (i = 0; i < n; i++)
     {
-        std::cout << "Enter file name: ";
-        std::cin >> f[i].fname;
-        std::cout << "Enter starting block: ";
-        std::cin >> f[i].start;
+        // File details input
+        cout << "Enter file name: ";
+        cin >> f[i].fname;
+        cout << "Enter starting block: ";
+        cin >> f[i].start;
         f[i].block[0] = f[i].start;
-        std::cout << "Enter number of blocks: ";
-        std::cin >> f[i].size;
-        std::cout << "Enter block numbers: ";
+        cout << "Enter number of blocks: ";
+        cin >> f[i].size;
+        cout << "Enter block numbers: ";
         for (j = 0; j < f[i].size; j++)
         {
-            std::cin >> f[i].block[j];
+            cin >> f[i].block[j];
         }
     }
-    std::cout << "File\tstart\tsize\tblock\n";
+    cout << "File\tstart\tsize\tblock\n";
     for (i = 0; i < n; i++)
     {
-        std::cout << f[i].fname << "\t" << f[i].start << "\t" << f[i].size << "\t";
-        for (j = 0; f[i].size; j++) std::cout << f[i].block[j] << " --> ";
-        std::cout << f[i].block[j];
-        std::cout << std::endl;
+        cout << f[i].fname << "\t" << f[i].start << "\t" << f[i].size << "\t";
+        for (j = 0; j < f[i].size; j++) 
+        cout << f[i].block[j] << " --> ";
+        cout << f[i].block[j];
+        cout << endl;
     }
     return 0;
 }
