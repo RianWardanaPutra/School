@@ -13,6 +13,7 @@ Semester\ II/Graph/Graph/
 !*.java
 !*.py
 !*.js*
+!*.md
 
 # In subdir too
 !*/
