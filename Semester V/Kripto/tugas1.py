@@ -52,10 +52,6 @@ def decrypt_transpose(cipher, columns):
             plain += block[j][i]
 
     return plain
-    # for i in range(columns):
-    #     for j in range(rows):
-
-
 
 def decrypt_vigenere(cipher, key):
     cipher = cipher.rstrip()
