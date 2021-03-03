@@ -4,6 +4,9 @@
 # REQUIRED LIBRARY: tkinter, math, PIL
 # BY: RIAN WARDANA
 
+## ! Important => Jalankan dengan command " python <nama_file_ini.py> "
+## ! Important => Atau " python3 <nama_file_ini.py> " jika terjadi error syntax
+
 # Import library yang dibutuhkan
 import tkinter as tk
 import math as mt
